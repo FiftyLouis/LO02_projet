@@ -3,9 +3,11 @@ package modele;
 public class Partie {
 	
 	private String etat;
+	private Zone zones;
 	
-	public Partie() {
+	public Partie(Zone z) {
 		this.etat = "dev";
+		this.zones = z;
 	}
 	
 	public void lancement() {
