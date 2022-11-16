@@ -9,9 +9,13 @@ package modele;
  */
 public class EtudiantElite extends Etudiant{
 
-	public EtudiantElite(Strategie s) {
-		super(s);
-		// TODO Auto-generated constructor stub
+	public EtudiantElite() {
+		super(1,1,1,5,1);
+	}
+
+	@Override
+	public String toString() {
+		return "EtudiantElite []" + super.toString();
 	}
 
 }
