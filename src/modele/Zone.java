@@ -3,6 +3,7 @@
  */
 package modele;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -26,7 +27,6 @@ public class Zone {
 		this.J1 = new LinkedList<Etudiant>();
 		this.J2 = new LinkedList<Etudiant>();
 	}
-	
 	
 	
 	

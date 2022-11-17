@@ -35,23 +35,61 @@ public class Joueurs {
 	}
 	
 	public void distribuerPoint() {
-		Scanner sc = new Scanner(System.in);
 		while(this.caracDispo>0) {
-			etudiants.forEach( (e) -> {
-				System.out.println(e.toString());
-				String rep = sc.nextLine();
-				if(rep.equals("y")) {
-					e.setDexterite(e.getDexterite() + 0);
-					e.setForce(e.getForce()+ 0);
-				}
-				System.out.println("set strategie");
-				rep = sc.nextLine();
+			for(Etudiant e : this.etudiants) {
+				if(this.caracDispo<=0) break;
+				String rep = "test";
+				Scanner sc = new Scanner(System.in);
+				do {
+					System.out.println("points disponible : " + this.caracDispo + "\n carac etudiant" + e.toString());
+					System.out.println("veuillez saisir l'attribut à améliorer suivi de sa valuer. Pour selectionner sa strategie, taper 'strategie 1' pour agressive ou 'strategie 2' pour defensive"
+					+ "\n Pour passer à un autre etudiant saisissez 'suivant'.");
+					rep = sc.nextLine();
+					this.TraduireResult(rep, e);
+				}while(!rep.equals("suivant"));
+				
 				e.SetStrategie(new StrategieAgg());
-			});
+			}
 		}
 	}
-
 	
+	private String TraduireResult(String rep, Etudiant e) {
+		String carac = rep.split(" ")[0];
+		String nbr = rep.split(" ")[1];
+		int val = 0;
+		try {
+			 val = Integer.parseInt(nbr);
+			 if(val<0 || val>this.caracDispo) return "erreur vous n'avez pas assez de points ou vous avez saisi une valuer inferieur à 0";
+		}catch(java.lang.NumberFormatException ie) {
+			return "erreur vous n'avez pas saisi un int";
+		}
+		if(carac.equals("strategie")) {
+			this.setStrat(e, val);
+		}else {
+			this.setCaracDispo(this.getCaracDispo() -val);
+			switch(carac){
+				case "dexterite" -> e.setDexterite(e.getDexterite() + val);
+				case "force" -> e.setForce(e.getForce() + val);
+				case "resistance" -> e.setResistance(e.getResistance() +val);
+				case "constitution" -> e.setConstitution(e.getConstitution() +val);
+				case "initiative" -> e.setInitiative(e.getInitiative() +val);
+				default -> {
+					this.setCaracDispo(this.getCaracDispo()+val);
+					return "ce que vous avez saisi n'est pas une caractéristique";
+				}
+			}
+		}
+		return e.toString();
+	}
+	
+	private void setStrat(Etudiant e, int val) {
+		switch(val) {
+			case 1 -> e.SetStrategie(new StrategieAgg());
+			case 2 -> e.SetStrategie(new StrategieDef());
+			case 3 -> System.out.println("erreur sur le choix de la strategie");
+		}
+	}
+		
 	public void choisirReserviste() {
 		System.out.println("vous ne pouvez ajouter que 5 etudiant à la reserve");
 		Scanner sc = new Scanner(System.in);
@@ -65,6 +103,22 @@ public class Joueurs {
 			});
 		}
 	}
+
+	/**
+	 * @return the caracDispo
+	 */
+	public int getCaracDispo() {
+		return caracDispo;
+	}
+
+	/**
+	 * @param caracDispo the caracDispo to set
+	 */
+	public void setCaracDispo(int caracDispo) {
+		this.caracDispo = caracDispo;
+	}
+	
+	
 	
 	
 }
