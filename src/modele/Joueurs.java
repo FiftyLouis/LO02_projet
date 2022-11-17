@@ -41,8 +41,12 @@ public class Joueurs {
 				System.out.println(e.toString());
 				String rep = sc.nextLine();
 				if(rep.equals("y")) {
-					
+					e.setDexterite(e.getDexterite() + 0);
+					e.setForce(e.getForce()+ 0);
 				}
+				System.out.println("set strategie");
+				rep = sc.nextLine();
+				e.SetStrategie(new StrategieAgg());
 			});
 		}
 	}
@@ -51,14 +55,14 @@ public class Joueurs {
 	public void choisirReserviste() {
 		System.out.println("vous ne pouvez ajouter que 5 etudiant à la reserve");
 		Scanner sc = new Scanner(System.in);
-		while(this.etudiants.size() > 15) {
-			for(Etudiant e : this.etudiants) {
+		while(this.reservistes.size() < 5) {
+			etudiants.forEach((e) -> {
 				System.out.println("souhaitez vous ajouter cette etudiant à la reserve" + e.toString()+ "y or n");
 				String rep = sc.nextLine();
 				if(rep.equals("y")) {
 					//todo
 				}
-			}
+			});
 		}
 	}
 	
