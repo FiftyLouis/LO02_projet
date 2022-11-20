@@ -18,7 +18,7 @@ public class Zone {
 	private nomZone zone;
 	
 	
-	enum nomZone{
+	public enum nomZone{
 		Bibliotheque,BureauEtudiant,QuartierAdministratif,HallesIndustrielles,HalleSportive
 	}
 	

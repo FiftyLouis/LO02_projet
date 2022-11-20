@@ -18,6 +18,10 @@ public class Joueurs {
 	private ArrayList<Etudiant> etudiants;
 	private ArrayList<Etudiant> reservistes;
 	
+	public enum Filiere {
+		ISI,MTE,GI,GM,RT
+	}
+	
 	public Joueurs(String p,Filiere f) {
 		this.pseudo = p;
 		this.caracDispo = 400;
@@ -113,6 +117,10 @@ public class Joueurs {
 				}
 			};
 		}
+	}
+	
+	public void AffecterTroupes() {
+		
 	}
 
 	/**
