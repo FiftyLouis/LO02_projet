@@ -1,11 +1,13 @@
 package test_packages;
 
+import modele.Filiere;
+import modele.Joueurs;
+
 public class test {
 	public static void main(String[] args) {
-			String  t = "0.9";
 			
-			int i = Integer.parseInt(t);
+			Joueurs j = new Joueurs("test", Filiere.ISI);
 			
-			System.out.println(i);
+			j.choisirReserviste();
 	}
 }

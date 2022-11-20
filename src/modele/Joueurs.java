@@ -36,16 +36,18 @@ public class Joueurs {
 	
 	public void distribuerPoint() {
 		while(this.caracDispo>0) {
+			int cpt = 0;
 			for(Etudiant e : this.etudiants) {
+				cpt++;
 				if(this.caracDispo<=0) break;
 				String rep = "test";
 				Scanner sc = new Scanner(System.in);
 				do {
-					System.out.println("points disponible : " + this.caracDispo + "\n carac etudiant" + e.toString());
+					System.out.println("points disponible : " + this.caracDispo + "\n Etudiant n°"+cpt +" : " + e.toString());
 					System.out.println("veuillez saisir l'attribut à améliorer suivi de sa valuer. Pour selectionner sa strategie, taper 'strategie 1' pour agressive ou 'strategie 2' pour defensive"
 					+ "\n Pour passer à un autre etudiant saisissez 'suivant'.");
 					rep = sc.nextLine();
-					this.TraduireResult(rep, e);
+					System.out.println(this.TraduireResult(rep, e));
 				}while(!rep.equals("suivant"));
 				
 				e.SetStrategie(new StrategieAgg());
@@ -54,6 +56,7 @@ public class Joueurs {
 	}
 	
 	private String TraduireResult(String rep, Etudiant e) {
+		if(rep.equals("suivant") || !rep.contains(" ")) return "Joueur suivant ou saisi incorrect";
 		String carac = rep.split(" ")[0];
 		String nbr = rep.split(" ")[1];
 		int val = 0;
@@ -79,7 +82,7 @@ public class Joueurs {
 				}
 			}
 		}
-		return e.toString();
+		return "points attribuer";
 	}
 	
 	private void setStrat(Etudiant e, int val) {
@@ -94,13 +97,21 @@ public class Joueurs {
 		System.out.println("vous ne pouvez ajouter que 5 etudiant à la reserve");
 		Scanner sc = new Scanner(System.in);
 		while(this.reservistes.size() < 5) {
-			etudiants.forEach((e) -> {
-				System.out.println("souhaitez vous ajouter cette etudiant à la reserve" + e.toString()+ "y or n");
+			int cpt = 0;
+			for(Etudiant e : this.etudiants) {
+				cpt++;
+				System.out.println("nombre d'etudiant dans la reserve: " + this.reservistes.size());
+				System.out.println("souhaitez vous ajouter cette etudiant n°" + cpt + " à la reserve" + e.toString()+ "y or n");
 				String rep = sc.nextLine();
 				if(rep.equals("y")) {
-					//todo
+					if(this.reservistes.size()==4) {
+						this.reservistes.add(e);
+						System.out.println("reserve complete 5/5 etudiant");
+						return;
+					}
+					this.reservistes.add(e);
 				}
-			});
+			};
 		}
 	}
 
