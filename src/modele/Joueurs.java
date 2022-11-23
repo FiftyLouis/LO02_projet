@@ -10,9 +10,10 @@ import java.util.Scanner;
  * @author louis
  *
  */
-public class Joueurs {
+public class Joueurs{
 	
 	private String pseudo;
+	private int id;
 	private int caracDispo;
 	private Filiere filiere;
 	private ArrayList<Etudiant> etudiants;
@@ -22,7 +23,8 @@ public class Joueurs {
 		ISI,MTE,GI,GM,RT
 	}
 	
-	public Joueurs(String p,Filiere f) {
+	public Joueurs(String p,Filiere f,int id) {
+		this.id = id;
 		this.pseudo = p;
 		this.caracDispo = 400;
 		this.filiere = f;
@@ -119,8 +121,19 @@ public class Joueurs {
 		}
 	}
 	
-	public void AffecterTroupes() {
-		
+	public void AffecterTroupes(Zone zone) {
+		Scanner sc = new Scanner(System.in);
+		int cpt = 0;
+		for(Etudiant e : this.etudiants) {
+			cpt++;
+			System.out.println("voulez vous affecter etudiant n° "+ cpt +" : " +e.toString() + " y or n");
+			String rep = sc.nextLine();
+			if(rep.equals("y")) {
+				zone.getMap().computeIfAbsent(this.id, k -> new ArrayList<>()).add(e);
+				this.etudiants.remove(e);
+				System.out.println("etudiant affecter " + zone.toString());
+			}
+		}
 	}
 
 	/**

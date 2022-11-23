@@ -17,4 +17,18 @@ public class Partie {
 	public void gagner() {
 		
 	}
+	
+	
+}
+
+class Multithreading implements Runnable {
+    public void run() {
+        try {
+            // afficher le thread en cours d'exécution
+            System.out.println("Thread " + Thread.currentThread().getId() + " est en cours d'exécution");
+ 
+        } catch (Exception e) {
+            System.out.println("Exception " + e.getMessage());
+        }
+    }
 }
