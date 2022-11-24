@@ -9,6 +9,7 @@ package modele;
  */
 public class Etudiant {
 	
+
 	private int credit;
 	private Strategie strategie;
 	
@@ -120,6 +121,19 @@ public class Etudiant {
 	 */
 	public void setInitiative(int initiative) {
 		this.initiative = initiative;
+	}
+	/**
+	 * @return the credit
+	 */
+	public int getCredit() {
+		return credit;
+	}
+
+	/**
+	 * @param credit the credit to set
+	 */
+	public void setCredit(int credit) {
+		this.credit = credit;
 	}
 	
 	

@@ -13,7 +13,6 @@ import java.util.Scanner;
 public class Joueurs{
 	
 	private String pseudo;
-	private int id;
 	private int caracDispo;
 	private Filiere filiere;
 	private ArrayList<Etudiant> etudiants;
@@ -23,8 +22,7 @@ public class Joueurs{
 		ISI,MTE,GI,GM,RT
 	}
 	
-	public Joueurs(String p,Filiere f,int id) {
-		this.id = id;
+	public Joueurs(String p,Filiere f) {
 		this.pseudo = p;
 		this.caracDispo = 400;
 		this.filiere = f;
@@ -129,7 +127,7 @@ public class Joueurs{
 			System.out.println("voulez vous affecter etudiant n° "+ cpt +" : " +e.toString() + " y or n");
 			String rep = sc.nextLine();
 			if(rep.equals("y")) {
-				zone.getMap().computeIfAbsent(this.id, k -> new ArrayList<>()).add(e);
+				zone.getMap().computeIfAbsent(this.pseudo, k -> new ArrayList<>()).add(e);
 				this.etudiants.remove(e);
 				System.out.println("etudiant affecter " + zone.toString());
 			}

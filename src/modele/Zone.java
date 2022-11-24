@@ -17,11 +17,7 @@ import java.util.TreeMap;
  */
 public class Zone {
 	
-	private Map<Integer, List<Etudiant>> map = new HashMap<>();
-	@Override
-	public String toString() {
-		return "Zone [map=" + map.toString() + ", zone=" + zone + "]";
-	}
+	private Map<String, List<Etudiant>> map = new HashMap<>();
 
 	private nomZone zone;
 	
@@ -38,15 +34,20 @@ public class Zone {
 	/**
 	 * @return the map
 	 */
-	public Map<Integer, List<Etudiant>> getMap() {
+	public Map<String, List<Etudiant>> getMap() {
 		return map;
 	}
 
 	/**
 	 * @param map the map to set
 	 */
-	public void setMap(Map<Integer, List<Etudiant>> map) {
+	public void setMap(Map<String, List<Etudiant>> map) {
 		this.map = map;
+	}
+	
+	@Override
+	public String toString() {
+		return "Zone [map=" + map.toString() + ", zone=" + zone + "]";
 	}
 
 	public void testMultiMap() {

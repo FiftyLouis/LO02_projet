@@ -15,7 +15,7 @@ public class StrategieDef implements Strategie {
 	}
 
 	@Override
-	public void jouer() {
+	public void jouer(Etudiant e, Zone z,String p) {
 		// TODO Auto-generated method stub
 		
 	}
