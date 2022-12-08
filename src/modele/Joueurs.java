@@ -4,6 +4,7 @@
 package modele;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
@@ -14,18 +15,17 @@ public class Joueurs{
 	
 	private String pseudo;
 	private int caracDispo;
-	private Filiere filiere;
+	private Partie.Filiere filiere;
 	private ArrayList<Etudiant> etudiants;
 	private ArrayList<Etudiant> reservistes;
+	private int zoneControle;
 	
-	public enum Filiere {
-		ISI,MTE,GI,GM,RT
-	}
 	
-	public Joueurs(String p,Filiere f) {
+	public Joueurs(String p,Partie.Filiere f) {
 		this.pseudo = p;
 		this.caracDispo = 400;
 		this.filiere = f;
+		this.zoneControle = 0;
 		this.etudiants = new ArrayList<Etudiant>() {{
 			for(int i = 0 ; i<15;i++) {
 				add(new Etudiant());
@@ -38,6 +38,34 @@ public class Joueurs{
 		this.reservistes = new ArrayList<Etudiant>();
 	}
 	
+	/**
+	 * @return the zoneControle
+	 */
+	public int getZoneControle() {
+		return zoneControle;
+	}
+
+	/**
+	 * @param zoneControle the zoneControle to set
+	 */
+	public void setZoneControle(int zoneControle) {
+		this.zoneControle = zoneControle;
+	}
+
+	/**
+	 * @return the pseudo
+	 */
+	public String getPseudo() {
+		return pseudo;
+	}
+
+	/**
+	 * @param pseudo the pseudo to set
+	 */
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
+	}
+
 	public void distribuerPoint() {
 		while(this.caracDispo>0) {
 			int cpt = 0;
@@ -100,6 +128,7 @@ public class Joueurs{
 	public void choisirReserviste() {
 		System.out.println("vous ne pouvez ajouter que 5 etudiant à la reserve");
 		Scanner sc = new Scanner(System.in);
+		ArrayList<Etudiant> remove = new ArrayList<Etudiant>();
 		while(this.reservistes.size() < 5) {
 			int cpt = 0;
 			for(Etudiant e : this.etudiants) {
@@ -108,30 +137,38 @@ public class Joueurs{
 				System.out.println("souhaitez vous ajouter cette etudiant n°" + cpt + " à la reserve" + e.toString()+ "y or n");
 				String rep = sc.nextLine();
 				if(rep.equals("y")) {
+					remove.add(e);
 					if(this.reservistes.size()==4) {
 						this.reservistes.add(e);
 						System.out.println("reserve complete 5/5 etudiant");
+						this.etudiants.removeAll(remove);
 						return;
 					}
 					this.reservistes.add(e);
 				}
-			};
+			}
 		}
 	}
 	
 	public void AffecterTroupes(Zone zone) {
 		Scanner sc = new Scanner(System.in);
 		int cpt = 0;
+		ArrayList<Etudiant> remove =  new ArrayList<Etudiant>();
 		for(Etudiant e : this.etudiants) {
 			cpt++;
 			System.out.println("voulez vous affecter etudiant n° "+ cpt +" : " +e.toString() + " y or n");
 			String rep = sc.nextLine();
 			if(rep.equals("y")) {
-				zone.getMap().computeIfAbsent(this.pseudo, k -> new ArrayList<>()).add(e);
-				this.etudiants.remove(e);
+				zone.getMap().computeIfAbsent(this.pseudo, k -> new LinkedList<>()).add(e);
+				remove.add(e);
 				System.out.println("etudiant affecter " + zone.toString());
 			}
 		}
+		this.etudiants.removeAll(remove);
+	}
+	
+	public void reaffecterTroupes(Zone zone) {
+		
 	}
 
 	/**

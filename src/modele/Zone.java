@@ -17,31 +17,44 @@ import java.util.TreeMap;
  */
 public class Zone {
 	
-	private Map<String, List<Etudiant>> map = new HashMap<>();
+	private Map<String, LinkedList<Etudiant>> map = new HashMap<>();
 
-	private nomZone zone;
+	private Partie.nomZone zone;
+	private Joueurs owner;
 	
 	
-	public enum nomZone{
-		Bibliotheque,BureauEtudiant,QuartierAdministratif,HallesIndustrielles,HalleSportive
-	}
 	
-	public Zone(nomZone z) {
+	public Zone(Partie.nomZone z) {
 		this.zone = z;
 		this.map = new HashMap<>();
+		this.owner = null;
 	}
 	
 	/**
+	 * @return the owner
+	 */
+	public Joueurs getOwner() {
+		return owner;
+	}
+
+	/**
+	 * @param owner the owner to set
+	 */
+	public void setOwner(Joueurs owner) {
+		this.owner = owner;
+	}
+
+	/**
 	 * @return the map
 	 */
-	public Map<String, List<Etudiant>> getMap() {
+	public Map<String, LinkedList<Etudiant>> getMap() {
 		return map;
 	}
 
 	/**
 	 * @param map the map to set
 	 */
-	public void setMap(Map<String, List<Etudiant>> map) {
+	public void setMap(Map<String, LinkedList<Etudiant>> map) {
 		this.map = map;
 	}
 	
@@ -49,13 +62,20 @@ public class Zone {
 	public String toString() {
 		return "Zone [map=" + map.toString() + ", zone=" + zone + "]";
 	}
-
-	public void testMultiMap() {
-		/*MultiMap<String, String> map = new MultiValueMap<>();
-		map.put("key1", "value1");
-		map.put("key1", "value2");
-		assertThat((Collection<String>) map.get("key1"))
-		  .contains("value1", "value2");*/
+	
+	public void Bataille(String j1, String j2) {
+			Etudiant e = this.map.get(j1).removeFirst();
+			e.getStrategie().jouer(e, this, j1, j2);
+			this.map.get(j1).addLast(e);
+	}
+	
+	public boolean mapIsEmpty(String j1, String j2) {
+		try {
+			return this.map.get(j1).isEmpty() || this.map.get(j2).isEmpty();
+		}catch(NullPointerException e) {
+			System.out.println("map vide " + this.zone);
+			return true;
+		}
 	}
 	
 	

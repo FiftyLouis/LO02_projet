@@ -41,6 +41,20 @@ public class Etudiant {
 		this.strategie= null;
 	}
 	
+	/**
+	 * @return the strategie
+	 */
+	public Strategie getStrategie() {
+		return strategie;
+	}
+
+	/**
+	 * @param strategie the strategie to set
+	 */
+	public void setStrategie(Strategie strategie) {
+		this.strategie = strategie;
+	}
+
 	public void SetStrategie(Strategie s) {
 		this.strategie = s;
 	}
