@@ -5,6 +5,7 @@ package modele;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -27,13 +28,14 @@ public class Joueurs{
 		this.filiere = f;
 		this.zoneControle = 0;
 		this.etudiants = new ArrayList<Etudiant>() {{
-			for(int i = 0 ; i<15;i++) {
-				add(new Etudiant());
+			int i;
+			for(i = 0; i<15;i++) {
+				add(new Etudiant(i+1));
 			}
-			for(int i = 0 ; i<4; i++) {
-				add(new EtudiantElite());
+			for(i = 14 ; i<19; i++) {
+				add(new EtudiantElite(i+1));
 			}
-			add(new MaitreGobi());
+			add(new MaitreGobi(20));
 		}};
 		this.reservistes = new ArrayList<Etudiant>();
 	}
@@ -49,7 +51,21 @@ public class Joueurs{
 	 * @param zoneControle the zoneControle to set
 	 */
 	public void setZoneControle(int zoneControle) {
-		this.zoneControle = zoneControle;
+		this.zoneControle += zoneControle;
+	}
+
+	/**
+	 * @return the etudiants
+	 */
+	public ArrayList<Etudiant> getEtudiants() {
+		return etudiants;
+	}
+
+	/**
+	 * @param etudiants the etudiants to set
+	 */
+	public void setEtudiants(ArrayList<Etudiant> etudiants) {
+		this.etudiants = etudiants;
 	}
 
 	/**
@@ -67,26 +83,28 @@ public class Joueurs{
 	}
 
 	public void distribuerPoint() {
+		Scanner sc = new Scanner(System.in);
 		while(this.caracDispo>0) {
-			int cpt = 0;
 			for(Etudiant e : this.etudiants) {
-				cpt++;
 				if(this.caracDispo<=0) break;
 				String rep = "test";
-				Scanner sc = new Scanner(System.in);
 				do {
-					System.out.println("points disponible : " + this.caracDispo + "\n Etudiant n°"+cpt +" : " + e.toString());
+					System.out.println("points disponible : " + this.caracDispo + "\n Etudiant n°"+e.getId() +" : " + e.toString());
 					System.out.println("veuillez saisir l'attribut à améliorer suivi de sa valuer. Pour selectionner sa strategie, taper 'strategie 1' pour agressive ou 'strategie 2' pour defensive"
 					+ "\n Pour passer à un autre etudiant saisissez 'suivant'.");
 					rep = sc.nextLine();
 					System.out.println(this.TraduireResult(rep, e));
 				}while(!rep.equals("suivant"));
-				
-				e.SetStrategie(new StrategieAgg());
 			}
 		}
 	}
 	
+	@Override
+	public String toString() {
+		return "Joueurs [pseudo=" + pseudo + ", caracDispo=" + caracDispo + ", filiere=" + filiere + ", etudiants="
+				+ etudiants + ", reservistes=" + reservistes + ", zoneControle=" + zoneControle + "]";
+	}
+
 	private String TraduireResult(String rep, Etudiant e) {
 		if(rep.equals("suivant") || !rep.contains(" ")) return "Joueur suivant ou saisi incorrect";
 		String carac = rep.split(" ")[0];
@@ -130,11 +148,9 @@ public class Joueurs{
 		Scanner sc = new Scanner(System.in);
 		ArrayList<Etudiant> remove = new ArrayList<Etudiant>();
 		while(this.reservistes.size() < 5) {
-			int cpt = 0;
 			for(Etudiant e : this.etudiants) {
-				cpt++;
 				System.out.println("nombre d'etudiant dans la reserve: " + this.reservistes.size());
-				System.out.println("souhaitez vous ajouter cette etudiant n°" + cpt + " à la reserve" + e.toString()+ "y or n");
+				System.out.println("souhaitez vous ajouter cette etudiant n°" + e.getId() + " à la reserve" + e.toString()+ "y or n");
 				String rep = sc.nextLine();
 				if(rep.equals("y")) {
 					remove.add(e);
@@ -150,25 +166,57 @@ public class Joueurs{
 		}
 	}
 	
-	public void AffecterTroupes(Zone zone) {
+	public void AffecterReservistes(Zone zone) {
 		Scanner sc = new Scanner(System.in);
-		int cpt = 0;
 		ArrayList<Etudiant> remove =  new ArrayList<Etudiant>();
-		for(Etudiant e : this.etudiants) {
-			cpt++;
-			System.out.println("voulez vous affecter etudiant n° "+ cpt +" : " +e.toString() + " y or n");
+		for(Etudiant e : this.reservistes) {
+			System.out.println("voulez vous affecter etudiant n° "+ e.getId() +" : " +e.toString() + "  à zone "+ zone.getZone() +" y or n");
 			String rep = sc.nextLine();
 			if(rep.equals("y")) {
 				zone.getMap().computeIfAbsent(this.pseudo, k -> new LinkedList<>()).add(e);
 				remove.add(e);
-				System.out.println("etudiant affecter " + zone.toString());
+				System.out.println("reserviste affecter à" + zone.getZone());
+			}
+		}
+		this.reservistes.removeAll(remove);
+	}
+	
+	public void AffecterTroupes(Zone zone) {
+		ArrayList<Etudiant> remove =  new ArrayList<Etudiant>();
+		for(Etudiant e : this.etudiants) {
+			System.out.println("voulez vous affecter etudiant n° "+ e.getId() +" : " +e.toString() + "  à zone "+ zone.getZone() +" y or n");
+			Scanner sc = new Scanner(System.in);
+			String rep = sc.nextLine();
+			if(rep.equals("y")) {
+				zone.getMap().computeIfAbsent(this.pseudo, k -> new LinkedList<>()).add(e);
+				remove.add(e);
+				System.out.println("etudiant affecter " + zone.getZone());
 			}
 		}
 		this.etudiants.removeAll(remove);
 	}
 	
 	public void reaffecterTroupes(Zone zone) {
-		
+		Scanner sc =  new Scanner(System.in);
+		ArrayList<Etudiant> remove =  new ArrayList<Etudiant>();
+		zone.getMap().get(this.pseudo);
+		int size = zone.getMap().get(this.pseudo).size();
+		System.out.println(size);
+		for(Etudiant e : zone.getMap().get(this.pseudo)) {
+			if(size == 1) {
+				System.out.println("dernier etudiant impossible à reaffecter");
+				return;
+			}
+			System.out.println("voulez vous reaffecter cette etudiant : Attention il doit en restez un pour occuper la zone :" + e.toString());
+			System.out.println("y or n");
+			String rep = sc.nextLine();
+			if(rep.equals("y")) {
+				size--;
+				this.etudiants.add(e);
+				System.out.println("etudiant ajouter à votre liste d'etudiants");
+			}
+		}
+		zone.getMap().get(this.pseudo).removeAll(remove);
 	}
 
 	/**

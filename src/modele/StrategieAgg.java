@@ -27,12 +27,16 @@ public class StrategieAgg implements Strategie{
 		int x = 0 + r.nextInt(100 - 0);
 		if(x < (40 + 3*e.getDexterite())) {
 			System.out.println("attaque reussi");
-			double y = r.nextDouble();
+			double y = r.nextDouble() +0.1;
+			double coefDeg = Math.max(0, Math.min(100, 10*e.getForce()-5*cible.get().getResistance()));
+			int deg = (int) ((y*(1+coefDeg))*10);
+			cible.get().sousCredit(deg);
+			System.out.println("etudiant " + e.toString() +" a infligé " + deg + " à \n" + cible.get().toString());
 			if(cible.get().getCredit() <=0) {
 				z.getMap().get(j2).remove(cible.get());
 			}
 		}else {
-			System.out.println("attaque raté");
+			System.out.println(j1 + " attaque raté");
 		}
 	}
 }

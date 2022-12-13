@@ -11,6 +11,7 @@ public class Etudiant {
 	
 
 	private int credit;
+	private int id;
 	private Strategie strategie;
 	
 	//attirubt etudiant
@@ -21,7 +22,8 @@ public class Etudiant {
 	private int initiative;
 	
 	
-	public Etudiant() {
+	public Etudiant(int id) {
+		this.id = id;
 		this.credit = 30;
 		this.dexterite = 0;
 		this.force = 0;
@@ -31,7 +33,8 @@ public class Etudiant {
 		this.strategie = null;
 	}
 	
-	public Etudiant(int d, int f, int r, int c, int i) {
+	public Etudiant(int d, int f, int r, int c, int i, int id) {
+		this.id = id;
 		this.credit = 30;
 		this.dexterite = d;
 		this.force = f;
@@ -41,6 +44,20 @@ public class Etudiant {
 		this.strategie= null;
 	}
 	
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	/**
 	 * @return the strategie
 	 */
@@ -151,6 +168,8 @@ public class Etudiant {
 	}
 	
 	
-	
+	public void sousCredit(int credit) {
+		this.credit -= credit;
+	}
 	
 }

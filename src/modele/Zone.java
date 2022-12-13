@@ -3,13 +3,12 @@
  */
 package modele;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.NoSuchElementException;
+import java.util.Random;
+
 
 /**
  * @author louis
@@ -64,20 +63,49 @@ public class Zone {
 	}
 	
 	public void Bataille(String j1, String j2) {
+		try {
 			Etudiant e = this.map.get(j1).removeFirst();
-			e.getStrategie().jouer(e, this, j1, j2);
-			this.map.get(j1).addLast(e);
+			if(e.getStrategie() == null) {
+					Random r = new Random();
+					if(r.nextBoolean()) {
+						e.setStrategie(new StrategieAgg());
+					}else {
+						e.setStrategie(new StrategieDef());
+					}
+					e.getStrategie().jouer(e, this, j1, j2);
+					e.setStrategie(null);
+				}else {
+					e.getStrategie().jouer(e, this, j1, j2);				
+				}
+				this.map.get(j1).addLast(e);
+		}catch(NoSuchElementException e) {
+			System.out.println("this is a test");
+			return;
+		}
+			
 	}
 	
-	public boolean mapIsEmpty(String j1, String j2) {
+	/**
+	 * @return the zone
+	 */
+	public Partie.nomZone getZone() {
+		return zone;
+	}
+
+	/**
+	 * @param zone the zone to set
+	 */
+	public void setZone(Partie.nomZone zone) {
+		this.zone = zone;
+	}
+
+	
+	public boolean mapIsEmpty(String j) {
 		try {
-			return this.map.get(j1).isEmpty() || this.map.get(j2).isEmpty();
+			return this.map.get(j).isEmpty();
 		}catch(NullPointerException e) {
-			System.out.println("map vide " + this.zone);
 			return true;
 		}
 	}
-	
-	
-	
 }
+	

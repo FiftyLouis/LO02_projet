@@ -9,8 +9,8 @@ package modele;
  */
 public class MaitreGobi extends Etudiant{
 
-	public MaitreGobi() {
-		super(2,2,2,10,2);
+	public MaitreGobi(int id) {
+		super(2,2,2,10,2, id);
 	}
 
 	@Override

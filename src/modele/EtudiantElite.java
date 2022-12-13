@@ -9,8 +9,8 @@ package modele;
  */
 public class EtudiantElite extends Etudiant{
 
-	public EtudiantElite() {
-		super(1,1,1,5,1);
+	public EtudiantElite(int id) {
+		super(1,1,1,5,1,id);
 	}
 
 	@Override
