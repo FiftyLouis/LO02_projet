@@ -79,7 +79,7 @@ public class Zone {
 				}
 				this.map.get(j1).addLast(e);
 		}catch(NoSuchElementException e) {
-			System.out.println("this is a test");
+			System.out.println("Soin impossible, seule joueur allie sur la zone");
 			return;
 		}
 			

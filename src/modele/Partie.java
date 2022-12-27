@@ -35,8 +35,8 @@ public class Partie {
 		this.zones.add(new Zone(nomZone.HallesIndustrielles));
 		this.zones.add(new Zone(nomZone.HalleSportive));
 		this.zones.add(new Zone(nomZone.QuartierAdministratif));
-		this.j1 = new Joueurs("test1", Filiere.ISI);
-		this.j2 = new Joueurs("test2", Filiere.ISI);
+		this.j1 = new Joueurs("Joueur 1", Filiere.ISI);
+		this.j2 = new Joueurs("Joueur 2", Filiere.ISI);
 		System.out.println("set up partie");
 		System.out.println("tour joueur :" + j1.getPseudo());
 		j1.distribuerPoint();
@@ -58,8 +58,8 @@ public class Partie {
 			this.reservistes();
 		}
 		System.out.println("partie fini");
-		System.out.println(j1.getZoneControle());
-		System.out.println(j2.getZoneControle());
+		System.out.println("score joueur 1: " + j1.getZoneControle());
+		System.out.println("score joueur 2: " + j2.getZoneControle());
 		sc.close();
 	}
 	
@@ -79,7 +79,7 @@ public class Partie {
 				System.out.println("gagnant de la map : "+ j1.getPseudo() + " : " + z.getZone());
 				this.zoneControle.add(z);
 				z.setOwner(j1);
-				j2.setZoneControle(j1.getZoneControle()+1);
+				j1.setZoneControle(j1.getZoneControle()+1);
 				return z;
 			}
 			else {
@@ -95,6 +95,13 @@ public class Partie {
 					return z;
 				}
 				z.Bataille(j2.getPseudo(), j1.getPseudo());
+				if(z.mapIsEmpty(j1.getPseudo())) {
+					System.out.println("gagnant de la map : "+ j2.getPseudo() + " : " + z.getZone());
+					this.zoneControle.add(z);
+					z.setOwner(j2);
+					j2.setZoneControle(j2.getZoneControle()+1);
+					return z;
+				}
 			}	
 		}
 		if(zoneVide.size() > 0) {

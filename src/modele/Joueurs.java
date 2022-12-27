@@ -95,6 +95,7 @@ public class Joueurs{
 					rep = sc.nextLine();
 					System.out.println(this.TraduireResult(rep, e));
 				}while(!rep.equals("suivant"));
+				e.setCredit(e.getCredit() + e.getConstitution()); //update credit avec constitution
 			}
 		}
 	}
