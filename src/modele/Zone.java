@@ -59,7 +59,7 @@ public class Zone {
 	
 	@Override
 	public String toString() {
-		return "Zone [map=" + map.toString() + ", zone=" + zone + "]";
+		return "Zone :" + zone + " ";
 	}
 	
 	public void Bataille(String j1, String j2) {

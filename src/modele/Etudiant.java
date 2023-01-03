@@ -20,6 +20,8 @@ public class Etudiant {
 	private int resistance;
 	private int constitution;
 	private int initiative;
+	private boolean reserviste;
+	private Partie.nomZone zone;
 	
 	
 	public Etudiant(int id) {
@@ -31,6 +33,8 @@ public class Etudiant {
 		this.constitution = 0;
 		this.initiative = 0;
 		this.strategie = null;
+		this.reserviste = false;
+		this.zone = Partie.nomZone.Default;
 	}
 	
 	public Etudiant(int d, int f, int r, int c, int i, int id) {
@@ -42,8 +46,39 @@ public class Etudiant {
 		this.constitution = c;
 		this.initiative = i;
 		this.strategie= null;
+		this.reserviste = false;
+		this.zone = Partie.nomZone.Default;
 	}
 	
+
+	/**
+	 * @return the zone
+	 */
+	public Partie.nomZone getZone() {
+		return zone;
+	}
+
+	/**
+	 * @param zone the zone to set
+	 */
+	public void setZone(Partie.nomZone zone) {
+		this.zone = zone;
+	}
+
+	/**
+	 * @return the reserviste
+	 */
+	public boolean isReserviste() {
+		return reserviste;
+	}
+
+	/**
+	 * @param reserviste the reserviste to set
+	 */
+	public void setReserviste(boolean reserviste) {
+		this.reserviste = reserviste;
+	}
+
 	/**
 	 * @return the id
 	 */
@@ -72,16 +107,17 @@ public class Etudiant {
 		this.strategie = strategie;
 	}
 
-	public void SetStrategie(Strategie s) {
-		this.strategie = s;
+	public void setStrat(String s) {
+		switch(s) {
+			case "Agressive" -> setStrategie(new StrategieAgg());
+			case "Defensive" -> setStrategie(new StrategieDef());
+		}
 	}
 	
 
 	@Override
 	public String toString() {
-		return "Etudiant [credit=" + credit + ", strategie=" + strategie + ", dexterite=" + dexterite + ", force="
-				+ force + ", resistance=" + resistance + ", constitution=" + constitution + ", initiative=" + initiative
-				+ "]";
+		return "Etudiant : " + this.getId();
 	}
 
 	/**

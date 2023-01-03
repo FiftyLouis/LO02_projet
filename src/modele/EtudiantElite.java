@@ -15,7 +15,7 @@ public class EtudiantElite extends Etudiant{
 
 	@Override
 	public String toString() {
-		return "EtudiantElite []" + super.toString();
+		return "EtudiantElite : " +  this.getId();
 	}
 
 }

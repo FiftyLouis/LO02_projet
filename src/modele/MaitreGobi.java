@@ -15,7 +15,7 @@ public class MaitreGobi extends Etudiant{
 
 	@Override
 	public String toString() {
-		return "MaitreGobi []" + super.toString();
+		return "MaitreGobi : " + this.getId() ;
 	}
 
 }
